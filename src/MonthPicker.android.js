@@ -28,7 +28,7 @@ const MonthPicker = ({
       let date;
       switch (action) {
         case ACTION_DATE_SET:
-          date = new Date(year, month);
+          date = new Date(year, month - 1, 1);
           break;
         case ACTION_DISMISSED:
         default:
