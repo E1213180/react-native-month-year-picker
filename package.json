@@ -42,7 +42,6 @@
     "semantic-release": "^17.0.7"
   },
   "dependencies": {
-    "invariant": "^2.2.4",
-    "moment": "^2.24.0"
+    "invariant": "^2.2.4"
   }
 }

@@ -127,14 +127,6 @@ Defines the minimum date that can be selected. Use year and month constructor.
 <RNMonthPicker minimumDate={new Date(2020, 5)} />
 ```
 
-#### `outputFormat` (`optional`)
-
-Defines the output format in which the date will return. Defaults to `MM-YYYY`. Refer to [moment.js docs](https://momentjs.com/docs/#/parsing/string-format/) for more information about formats.
-
-```js
-<RNMonthPicker outputFormat="M-YY" />
-```
-
 #### `okButton` (`optional`)
 
 Picker modal confirmation button text. Default `OK`.

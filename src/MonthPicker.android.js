@@ -1,16 +1,11 @@
-import moment from 'moment';
 import invariant from 'invariant';
 
 import RNMonthPickerDialogModule from './RNMonthPickerDialogModule';
 import { ACTION_DATE_SET, ACTION_DISMISSED } from './utils';
 
-const NATIVE_FORMAT = 'YYYY-MM';
-const DEFAULT_OUTPUT_FORMAT = 'MM-YYYY';
-
 const MonthPicker = ({
   value,
   onChange,
-  outputFormat,
   minimumDate,
   maximumDate,
   okButton = 'OK',
@@ -19,8 +14,7 @@ const MonthPicker = ({
 }) => {
   invariant(value, 'value prop is required!');
 
-  const getLongFromDate = (selectedValue) =>
-    moment(selectedValue, outputFormat || DEFAULT_OUTPUT_FORMAT).valueOf();
+  const getLongFromDate = (selectedValue) => selectedValue.valueOf();
 
   RNMonthPickerDialogModule.open({
     value: getLongFromDate(value),
@@ -34,9 +28,7 @@ const MonthPicker = ({
       let date;
       switch (action) {
         case ACTION_DATE_SET:
-          date = moment(`${year}-${month}`, NATIVE_FORMAT).format(
-            outputFormat || DEFAULT_OUTPUT_FORMAT,
-          );
+          date = new Date(year, month);
           break;
         case ACTION_DISMISSED:
         default:

@@ -8,7 +8,6 @@
 
 import React, { useState, useCallback } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import moment from 'moment';
 
 import MonthPicker from 'react-native-month-year-picker';
 
@@ -53,7 +52,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Month Year Picker Example</Text>
-      <Text>{moment(date, DEFAULT_FORMAT).format(DEFAULT_OUTPUT_FORMAT)}</Text>
+      <Text>{JSON.stringify(date)}</Text>
       <TouchableOpacity onPress={() => showPicker(true)} style={styles.button}>
         <Text style={styles.buttonText}>OPEN</Text>
       </TouchableOpacity>
