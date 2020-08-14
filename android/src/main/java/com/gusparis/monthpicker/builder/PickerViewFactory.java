@@ -3,6 +3,7 @@ package com.gusparis.monthpicker.builder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,11 @@ public class PickerViewFactory {
     int uiMode = fragmentActivity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
     int dialogStyle = R.style.LightStyle;
     int contentViewStyle = R.layout.picker_list_view;
+    boolean darkMode = uiMode == Configuration.UI_MODE_NIGHT_YES && props.enableAutoDarkMode();
+    final int buttonFG = darkMode ? Color.parseColor("#FFFFFF") : Color.parseColor("#1F1B24");
+    final int buttonBG = darkMode ? Color.parseColor("#1F1B24") : Color.parseColor("#FFFFFF");
 
-    if (uiMode == Configuration.UI_MODE_NIGHT_YES && props.enableAutoDarkMode()) {
+    if (darkMode) {
       dialogStyle = R.style.DarkStyle;
       contentViewStyle = R.layout.picker_list_view_dark;
     }
@@ -74,6 +78,17 @@ public class PickerViewFactory {
           }
         });
 
-    return builder.create();
+    final AlertDialog dialog = builder.create();
+    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+      @Override
+      public void onShow(DialogInterface arg0) {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(buttonFG);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(buttonFG);
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(buttonBG);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundColor(buttonBG);
+      }
+    });
+
+    return dialog;
   }
 }
