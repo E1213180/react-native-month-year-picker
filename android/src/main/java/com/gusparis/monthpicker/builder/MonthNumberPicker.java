@@ -3,6 +3,8 @@ package com.gusparis.monthpicker.builder;
 import android.os.Build;
 
 import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import androidx.annotation.RequiresApi;
@@ -24,7 +26,9 @@ class MonthNumberPicker extends MonthYearNumberPicker {
     monthPicker.setMaxValue(11);
     monthPicker.setDisplayedValues(MONTHS);
     monthPicker.setWrapSelectorWheel(false);
-    monthPicker.setValue(props.value().getMonthValue() - 1);
+    Calendar calendar = new GregorianCalendar();
+    calendar.setTime(props.value());
+    monthPicker.setValue(calendar.get(Calendar.MONTH));
     return this;
   }
 
@@ -33,14 +37,19 @@ class MonthNumberPicker extends MonthYearNumberPicker {
     int month = monthPicker.getValue();
     int year = yearPicker.getValue();
     int value = month;
-    if (Objects.nonNull(props.minimumValue()) &&
-        year == props.minimumValue().getYear() &&
-        month < props.minimumValue().getMonthValue() - 1) {
-      value = props.minimumValue().getMonthValue() - 1;
-    } else if (Objects.nonNull(props.maximumValue()) &&
-        year == props.maximumValue().getYear() &&
-        month > props.maximumValue().getMonthValue() - 1) {
-      value = props.maximumValue().getMonthValue() - 1;
+    if (Objects.nonNull(props.minimumValue())) {
+      Calendar minCalendar = new GregorianCalendar();
+      minCalendar.setTime(props.minimumValue());
+      if (year == minCalendar.get(Calendar.YEAR) && month < minCalendar.get(Calendar.MONTH)) {
+        value = minCalendar.get(Calendar.MONTH);
+      }
+    }
+    if (Objects.nonNull(props.maximumValue())) {
+      Calendar maxCalendar = new GregorianCalendar();
+      maxCalendar.setTime(props.maximumValue());
+      if (year == maxCalendar.get(Calendar.YEAR) && month > maxCalendar.get(Calendar.MONTH)) {
+        value = maxCalendar.get(Calendar.MONTH);
+      }
     }
     monthPicker.setValue(value);
   }

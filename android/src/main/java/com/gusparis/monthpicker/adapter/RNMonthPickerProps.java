@@ -1,14 +1,14 @@
 package com.gusparis.monthpicker.adapter;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public interface RNMonthPickerProps {
 
-  LocalDate value();
+  Date value();
 
-  LocalDate minimumValue();
+  Date minimumValue();
 
-  LocalDate maximumValue();
+  Date maximumValue();
 
   String okButton();
 

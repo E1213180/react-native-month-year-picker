@@ -67,7 +67,7 @@ public class PickerViewFactory {
         .setPositiveButton(props.okButton(), new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int id) {
-            props.onChange(yearPicker.getValue(), monthPicker.getValue());
+            props.onChange(yearPicker.getValue(), monthPicker.getValue() - 1);
             rnMonthPickerDialog.getDialog().cancel();
           }
         })

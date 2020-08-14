@@ -2,6 +2,8 @@ package com.gusparis.monthpicker.builder;
 
 import android.os.Build;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import androidx.annotation.RequiresApi;
@@ -19,7 +21,9 @@ class YearNumberPicker extends MonthYearNumberPicker {
 
   @Override
   YearNumberPicker build() {
-    int year = props.value().getYear();
+    Calendar calendar = new GregorianCalendar();
+    calendar.setTime(props.value());
+    int year = calendar.get(Calendar.YEAR);
     yearPicker.setMinValue(year - DEFAULT_SIZE);
     yearPicker.setMaxValue(year + DEFAULT_SIZE);
     yearPicker.setValue(year);
@@ -30,10 +34,20 @@ class YearNumberPicker extends MonthYearNumberPicker {
   synchronized void setValue() {
     int year = yearPicker.getValue();
     int value = year;
-    if (Objects.nonNull(props.minimumValue()) && year < props.minimumValue().getYear()) {
-      value = props.minimumValue().getYear();
-    } else if (Objects.nonNull(props.maximumValue()) && year > props.maximumValue().getYear()) {
-      value = props.maximumValue().getYear();
+
+    if (Objects.nonNull(props.minimumValue())) {
+      Calendar minCalendar = new GregorianCalendar();
+      minCalendar.setTime(props.minimumValue());
+      if (year < minCalendar.get(Calendar.YEAR)) {
+        value = minCalendar.get(Calendar.YEAR);
+      }
+    }
+    if (Objects.nonNull(props.maximumValue())) {
+      Calendar maxCalendar = new GregorianCalendar();
+      maxCalendar.setTime(props.maximumValue());
+      if (year > maxCalendar.get(Calendar.YEAR)) {
+        value = maxCalendar.get(Calendar.YEAR);
+      }
     }
     yearPicker.setValue(value);
   }

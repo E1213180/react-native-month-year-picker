@@ -6,9 +6,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableMap;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.TimeZone;
+import java.util.Date;
 
 import javax.annotation.Nullable;
 
@@ -35,18 +33,18 @@ public class RNPropsAdapter implements RNMonthPickerProps {
   }
 
   @Override
-  public LocalDate value() {
-    return getLocalDateValue(VALUE);
+  public Date value() {
+    return getDateValue(VALUE);
   }
 
   @Override
-  public LocalDate minimumValue() {
-    return getLocalDateValue(MINIMUM_VALUE);
+  public Date minimumValue() {
+    return getDateValue(MINIMUM_VALUE);
   }
 
   @Override
-  public LocalDate maximumValue() {
-    return getLocalDateValue(MAXIMUM_VALUE);
+  public Date maximumValue() {
+    return getDateValue(MAXIMUM_VALUE);
   }
 
   @Override
@@ -74,11 +72,9 @@ public class RNPropsAdapter implements RNMonthPickerProps {
     listener.onDismiss(null);
   }
 
-  private LocalDate getLocalDateValue(RNProps prop) {
+  private Date getDateValue(RNProps prop) {
     return props.hasKey(prop.value()) ?
-        Instant.ofEpochMilli((long) props.getDouble(prop.value()))
-            .atZone(TimeZone.getDefault().toZoneId())
-            .toLocalDate() :
+      new Date((long) props.getDouble(prop.value())) :
         null;
   }
 
